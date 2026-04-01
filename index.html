@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengajuan Rekomendasi Pindah Nikah - KUA Bontang Barat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom styles for smoother UX */
+        .input-field {
+            @apply w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500 focus:border-emerald-500 bg-gray-50 text-gray-800 transition-colors duration-200;
+        }
+        .section-title {
+            @apply text-xl font-semibold text-emerald-800 border-b-2 border-emerald-200 pb-2 mb-6 flex items-center gap-2;
+        }
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen py-8 font-sans">
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="bg-emerald-700 rounded-t-xl p-6 text-center shadow-md">
+            <h1 class="text-3xl font-bold text-white mb-2">Formulir Pengajuan</h1>
+            <h2 class="text-xl text-emerald-100">Surat Rekomendasi Pindah Nikah</h2>
+            <p class="text-emerald-200 mt-2">KUA Kecamatan Bontang Barat</p>
+        </div>
+
+        <!-- Form Container -->
+        <div class="bg-white rounded-b-xl shadow-lg p-6 sm:p-10">
+            
+            <!-- Alert Messages -->
+            <div id="alert-success" class="hidden mb-6 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-md relative" role="alert">
+                <p class="font-bold">Berhasil!</p>
+                <p>Data pengajuan Anda telah berhasil dikirim. Silakan tunggu konfirmasi dari petugas kami.</p>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="closeAlert('alert-success')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="alert-error" class="hidden mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md relative" role="alert">
+                <p class="font-bold">Terjadi Kesalahan!</p>
+                <p>Gagal mengirim data. Pastikan koneksi internet Anda stabil atau hubungi petugas.</p>
+                <button type="button" class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="closeAlert('alert-error')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="pengajuanForm" class="space-y-8">
+                
+                <!-- General Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="form-label" for="tanggal_pengajuan">Tanggal Pengajuan <span class="text-red-500">*</span></label>
+                        <input type="date" id="tanggal_pengajuan" name="tanggal_pengajuan" required class="input-field">
+                    </div>
+                </div>
+
+                <!-- BAGIAN PEMOHON -->
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <h3 class="section-title"><i class="fas fa-user"></i> Data Pemohon</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="form-label" for="nik_pemohon">NIK Pemohon <span class="text-red-500">*</span></label>
+                            <input type="text" id="nik_pemohon" name="nik_pemohon" required class="input-field" pattern="[0-9]{16}" title="Masukkan 16 digit NIK yang valid" placeholder="16 Digit NIK">
+                        </div>
+                        <div>
+                            <label class="form-label" for="nama_pemohon">Nama Lengkap Pemohon <span class="text-red-500">*</span></label>
+                            <input type="text" id="nama_pemohon" name="nama_pemohon" required class="input-field" placeholder="Sesuai KTP">
+                        </div>
+                        <div>
+                            <label class="form-label" for="bin_binti_pemohon">Bin/Binti <span class="text-red-500">*</span></label>
+                            <input type="text" id="bin_binti_pemohon" name="bin_binti_pemohon" required class="input-field" placeholder="Nama Ayah Kandung">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label" for="tempat_lahir_pemohon">Tempat Lahir <span class="text-red-500">*</span></label>
+                                <input type="text" id="tempat_lahir_pemohon" name="tempat_lahir_pemohon" required class="input-field">
+                            </div>
+                            <div>
+                                <label class="form-label" for="tgl_lahir_pemohon">Tanggal Lahir <span class="text-red-500">*</span></label>
+                                <input type="date" id="tgl_lahir_pemohon" name="tgl_lahir_pemohon" required class="input-field">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="jk_pemohon">Jenis Kelamin <span class="text-red-500">*</span></label>
+                            <select id="jk_pemohon" name="jk_pemohon" required class="input-field">
+                                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="status_pemohon">Status Perkawinan <span class="text-red-500">*</span></label>
+                            <select id="status_pemohon" name="status_pemohon" required class="input-field">
+                                <option value="" disabled selected>Pilih Status</option>
+                                <option value="Belum Kawin">Belum Kawin</option>
+                                <option value="Kawin">Kawin (Izin Poligami)</option>
+                                <option value="Cerai Mati">Cerai Mati</option>
+                                <option value="Cerai Hidup">Cerai Hidup</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label" for="umur_pemohon">Umur <span class="text-red-500">*</span></label>
+                                <input type="number" id="umur_pemohon" name="umur_pemohon" required class="input-field" min="19" placeholder="Minimal 19 Tahun">
+                            </div>
+                            <div>
+                                <label class="form-label" for="agama_pemohon">Agama <span class="text-red-500">*</span></label>
+                                <select id="agama_pemohon" name="agama_pemohon" required class="input-field">
+                                    <option value="Islam" selected>Islam</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="pekerjaan_pemohon">Pekerjaan <span class="text-red-500">*</span></label>
+                            <input type="text" id="pekerjaan_pemohon" name="pekerjaan_pemohon" required class="input-field">
+                        </div>
+                        <div>
+                            <label class="form-label" for="email_pemohon">Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="email_pemohon" name="email_pemohon" required class="input-field" placeholder="email@contoh.com">
+                        </div>
+                        <div>
+                            <label class="form-label" for="hp_pemohon">No HP/WhatsApp <span class="text-red-500">*</span></label>
+                            <input type="tel" id="hp_pemohon" name="hp_pemohon" required class="input-field" placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label" for="alamat_pemohon">Alamat Lengkap <span class="text-red-500">*</span></label>
+                            <textarea id="alamat_pemohon" name="alamat_pemohon" rows="3" required class="input-field" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN CALON PASANGAN -->
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <h3 class="section-title"><i class="fas fa-user-friends"></i> Data Calon Pasangan</h3>
+                    
+                    <div class="mb-6 bg-white p-4 rounded-md border border-gray-300">
+                        <label class="form-label font-bold text-emerald-700" for="warga_negara_calon">Kewarganegaraan Calon <span class="text-red-500">*</span></label>
+                        <select id="warga_negara_calon" name="warga_negara_calon" required class="input-field w-full md:w-1/2 mt-2" onchange="toggleWNAFields()">
+                            <option value="WNI" selected>Warga Negara Indonesia (WNI)</option>
+                            <option value="WNA">Warga Negara Asing (WNA)</option>
+                        </select>
+
+                        <!-- WNA specific fields -->
+                        <div id="wna_fields" class="hidden grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 pt-4 border-t border-gray-200">
+                            <div>
+                                <label class="form-label" for="negara_asal_calon">Negara Asal <span class="text-red-500">*</span></label>
+                                <input type="text" id="negara_asal_calon" name="negara_asal_calon" class="input-field" placeholder="Contoh: Malaysia, Turki">
+                            </div>
+                            <div>
+                                <label class="form-label" for="paspor_calon">No Paspor <span class="text-red-500">*</span></label>
+                                <input type="text" id="paspor_calon" name="paspor_calon" class="input-field">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="form-label" for="nik_calon">NIK Pasangan (Jika WNI)</label>
+                            <input type="text" id="nik_calon" name="nik_calon" class="input-field" pattern="[0-9]{16}" placeholder="16 Digit NIK">
+                        </div>
+                        <div>
+                            <label class="form-label" for="nama_calon">Nama Lengkap Pasangan <span class="text-red-500">*</span></label>
+                            <input type="text" id="nama_calon" name="nama_calon" required class="input-field">
+                        </div>
+                        <div>
+                            <label class="form-label" for="bin_binti_calon">Bin/Binti <span class="text-red-500">*</span></label>
+                            <input type="text" id="bin_binti_calon" name="bin_binti_calon" required class="input-field">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label" for="tempat_lahir_calon">Tempat Lahir <span class="text-red-500">*</span></label>
+                                <input type="text" id="tempat_lahir_calon" name="tempat_lahir_calon" required class="input-field">
+                            </div>
+                            <div>
+                                <label class="form-label" for="tgl_lahir_calon">Tanggal Lahir <span class="text-red-500">*</span></label>
+                                <input type="date" id="tgl_lahir_calon" name="tgl_lahir_calon" required class="input-field">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="jk_calon">Jenis Kelamin <span class="text-red-500">*</span></label>
+                            <select id="jk_calon" name="jk_calon" required class="input-field">
+                                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="status_calon">Status Perkawinan <span class="text-red-500">*</span></label>
+                            <select id="status_calon" name="status_calon" required class="input-field">
+                                <option value="" disabled selected>Pilih Status</option>
+                                <option value="Belum Kawin">Belum Kawin</option>
+                                <option value="Kawin">Kawin (Izin Poligami)</option>
+                                <option value="Cerai Mati">Cerai Mati</option>
+                                <option value="Cerai Hidup">Cerai Hidup</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="form-label" for="umur_calon">Umur <span class="text-red-500">*</span></label>
+                                <input type="number" id="umur_calon" name="umur_calon" required class="input-field" min="19">
+                            </div>
+                            <div>
+                                <label class="form-label" for="agama_calon">Agama <span class="text-red-500">*</span></label>
+                                <select id="agama_calon" name="agama_calon" required class="input-field">
+                                    <option value="Islam" selected>Islam</option>
+                                    <option value="Kristen">Kristen</option>
+                                    <option value="Katolik">Katolik</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Buddha">Buddha</option>
+                                    <option value="Konghucu">Konghucu</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label" for="pekerjaan_calon">Pekerjaan <span class="text-red-500">*</span></label>
+                            <input type="text" id="pekerjaan_calon" name="pekerjaan_calon" required class="input-field">
+                        </div>
+                        <div>
+                            <label class="form-label" for="email_calon">Email <span class="text-red-500">*</span></label>
+                            <input type="email" id="email_calon" name="email_calon" required class="input-field">
+                        </div>
+                        <div>
+                            <label class="form-label" for="hp_calon">No HP/WhatsApp <span class="text-red-500">*</span></label>
+                            <input type="tel" id="hp_calon" name="hp_calon" required class="input-field">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="form-label" for="alamat_calon">Alamat Lengkap <span class="text-red-500">*</span></label>
+                            <textarea id="alamat_calon" name="alamat_calon" rows="3" required class="input-field"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN LINK BERKAS -->
+                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <h3 class="section-title"><i class="fas fa-folder-open"></i> Tautan / Link Dokumen Persyaratan</h3>
+                    <p class="text-sm text-gray-600 mb-6">Silakan unggah dokumen Anda ke Google Drive, atur akses menjadi "Siapa saja yang memiliki link / Anyone with the link", lalu tempelkan link-nya di bawah ini.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="form-label" for="link_ktp">Link KTP Calon Suami & Istri (Dijadikan 1 file PDF) <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_ktp" name="link_ktp" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div>
+                            <label class="form-label" for="link_kk">Link KK Calon Suami & Istri (Dijadikan 1 file PDF) <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_kk" name="link_kk" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div>
+                            <label class="form-label" for="link_pengantar">Link Surat Pengantar Desa/Lurah Pemohon <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_pengantar" name="link_pengantar" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div>
+                            <label class="form-label" for="link_akta">Link Akta Kelahiran Pemohon <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_akta" name="link_akta" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div>
+                            <label class="form-label" for="link_ijazah">Link Ijazah Terakhir Pemohon <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_ijazah" name="link_ijazah" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div>
+                            <label class="form-label" for="link_foto">Link Pas Foto Pemohon <span class="text-red-500">*</span></label>
+                            <input type="url" id="link_foto" name="link_foto" required class="input-field" placeholder="https://drive.google.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4 flex justify-end">
+                    <button type="submit" id="submitBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-8 rounded-lg shadow-md transition-colors duration-300 flex items-center justify-center gap-2">
+                        <span>Kirim Pengajuan</span>
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <!-- Loading state indicator -->
+                    <button type="button" id="loadingBtn" class="hidden bg-emerald-400 text-white font-bold py-3 px-8 rounded-lg shadow-md cursor-not-allowed flex items-center justify-center gap-2" disabled>
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Memproses...</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center text-gray-500 text-sm mt-8 mb-4">
+            &copy; 2026 KUA Bontang Barat. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // SETTING URL GOOGLE APPS SCRIPT DI SINI
+        // ==========================================
+        // Ganti URL di bawah dengan URL Web App dari Google Apps Script Anda (lihat pedoman markdown)
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwnEDkCSv0hd_llFskpAWFx1uLgsj1DmvCI8-cg181ulY2m_O2kxnvTo2YwNkVAxndl/exec'; 
+        
+        // Form Logic
+        const form = document.forms['pengajuanForm'];
+        const submitBtn = document.getElementById('submitBtn');
+        const loadingBtn = document.getElementById('loadingBtn');
+
+        // Toggle WNA Fields
+        function toggleWNAFields() {
+            const statusWN = document.getElementById('warga_negara_calon').value;
+            const wnaFields = document.getElementById('wna_fields');
+            const negaraAsal = document.getElementById('negara_asal_calon');
+            const paspor = document.getElementById('paspor_calon');
+
+            if (statusWN === 'WNA') {
+                wnaFields.classList.remove('hidden');
+                negaraAsal.setAttribute('required', 'true');
+                paspor.setAttribute('required', 'true');
+            } else {
+                wnaFields.classList.add('hidden');
+                negaraAsal.removeAttribute('required');
+                paspor.removeAttribute('required');
+                negaraAsal.value = '';
+                paspor.value = '';
+            }
+        }
+
+        // Set Default Date to Today
+        document.getElementById('tanggal_pengajuan').valueAsDate = new Date();
+
+        // Alert Helper
+        function closeAlert(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showAlert(id) {
+            document.getElementById('alert-success').classList.add('hidden');
+            document.getElementById('alert-error').classList.add('hidden');
+            document.getElementById(id).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle Form Submit
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            // Tampilkan state loading
+            submitBtn.classList.add('hidden');
+            loadingBtn.classList.remove('hidden');
+
+            if(scriptURL === 'MASUKKAN_URL_WEB_APP_APPS_SCRIPT_DI_SINI'){
+                 alert("Peringatan: Anda belum memasukkan URL Google Apps Script pada kode HTML! Silakan baca pedoman untuk mengonfigurasinya.");
+                 submitBtn.classList.remove('hidden');
+                 loadingBtn.classList.add('hidden');
+                 return;
+            }
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    showAlert('alert-success');
+                    form.reset();
+                    // Reset custom fields logic
+                    toggleWNAFields();
+                    document.getElementById('tanggal_pengajuan').valueAsDate = new Date();
+                    
+                    submitBtn.classList.remove('hidden');
+                    loadingBtn.classList.add('hidden');
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    showAlert('alert-error');
+                    submitBtn.classList.remove('hidden');
+                    loadingBtn.classList.add('hidden');
+                });
+        });
+    </script>
+</body>
+</html>
